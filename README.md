@@ -7,4 +7,6 @@
 
 ## TODO: 
 - Add keybinds to open or switch to specific folders 
-- Permenant keybinds that persist across restarts
+- Permanent keybinds that persist across restarts
+- Disable conflicting existing keybinds
+- Find a decent keybind library. Current one goes insane when using ctrl alt down, others are annoying or impossible to use with control keys
