@@ -1,0 +1,4 @@
+keyboard==0.13.5
+pypiwin32==223
+pywin32==228
+win10toast==0.9
