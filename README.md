@@ -2,12 +2,13 @@
 - Adds shortcut keys to assign certain windows to certain shortcut keys
 
 # Permanent Installation
-- Download main.py and put it in a permanent spot on your computer
-- Shift right click on the file and click "Copy as path"
+- Download and extract the project to a permanent spot on your computer
+- Shift right click on the main.py file and click "Copy as path"
 - Right click on the file and click "Create shortcut" in the menu
 - Right click on the shortcut and click "Properties"
 - Replace the "Target" field with "pythonw \<path\>" where \<path\> is the path that you copied in step 2
-- Type "Windows Key + R", enter "shell:startup" and move your shortcut into that folder
+- Type "Windows Key + R", enter "shell:startup"
+- Move your shortcut and the WindowSortcuts.ahk file into the shell:startup folder
 - Right click on the shortcut or restart your computer
 
 # Usage

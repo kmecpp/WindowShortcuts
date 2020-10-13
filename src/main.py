@@ -1,7 +1,12 @@
-import keyboard
+import os
+import time
+import traceback
+
 import pythoncom
 import win32com
 import win32gui
+from watchdog.events import FileSystemEventHandler
+from watchdog.observers import Observer
 from win10toast import ToastNotifier
 from win32com.client import Dispatch
 
@@ -9,14 +14,7 @@ data = {}
 toaster = ToastNotifier()
 
 
-def on_window_set(key):
-    window = win32gui.GetForegroundWindow()
-    if window:
-        if toaster.show_toast("Window Keybinds", f"Bound window to key: {key}", duration=2, threaded=True):
-            data[key] = window
-
-
-def on_window_activate(key):
+def activate_window(key):
     if key in data:
         window = data[key]
         pythoncom.CoInitialize()
@@ -25,8 +23,41 @@ def on_window_activate(key):
         win32gui.SetForegroundWindow(window)
 
 
-for i in range(10):
-    keyboard.add_hotkey(f'ctrl+alt+{i}', on_window_set, args=[i])
-    keyboard.add_hotkey(f'ctrl+{i}', on_window_activate, args=[i])
+def set_window(key):
+    window = win32gui.GetForegroundWindow()
+    if window:
+        if toaster.show_toast("Window Keybinds", f"Bound window to key: {key}", duration=2, threaded=True):
+            data[key] = window
 
-keyboard.wait()
+
+class MyHandler(FileSystemEventHandler):
+
+    def on_modified(self, event):
+        with open(event.src_path) as f:
+            msg = f.read().strip()
+            if not msg:
+                return
+            try:
+                parts = msg.split()
+                action = parts[0]
+                key = int(parts[1])
+                if action == 'a':
+                    activate_window(key)
+                elif action == 's':
+                    set_window(key)
+            except:
+                traceback.print_exc()
+
+
+if __name__ == "__main__":
+    os.mkdir('data')
+    event_handler = MyHandler()
+    observer = Observer()
+    observer.schedule(event_handler, 'data')
+    observer.start()
+    try:
+        while True:
+            time.sleep(1)
+    except KeyboardInterrupt:
+        observer.stop()
+    observer.join()
