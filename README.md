@@ -9,7 +9,7 @@
 - Replace the "Target" field with "pythonw \<path\>" where \<path\> is the path that you copied in step 2
 - Type "Windows Key + R", enter "shell:startup"
 - Move your shortcut and the WindowSortcuts.ahk file into the shell:startup folder
-- Right click on the shortcut or restart your computer
+- Right click on both of the files you copied or restart your computer
 
 # Usage
 - "ctrl + alt + \<number key\>" - Assigns the current window to the given number

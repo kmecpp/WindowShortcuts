@@ -1,17 +1,16 @@
-import os
 import time
 import traceback
+from pathlib import Path
 
 import pythoncom
 import win32com
 import win32gui
 from watchdog.events import FileSystemEventHandler
 from watchdog.observers import Observer
-from win10toast import ToastNotifier
 from win32com.client import Dispatch
 
 data = {}
-toaster = ToastNotifier()
+# toaster = ToastNotifier()
 
 
 def activate_window(key):
@@ -26,8 +25,8 @@ def activate_window(key):
 def set_window(key):
     window = win32gui.GetForegroundWindow()
     if window:
-        if toaster.show_toast("Window Keybinds", f"Bound window to key: {key}", duration=2, threaded=True):
-            data[key] = window
+        # if toaster.show_toast("Window Keybinds", f"Bound window to key: {key}", duration=2, threaded=True):
+        data[key] = window
 
 
 class MyHandler(FileSystemEventHandler):
@@ -50,7 +49,7 @@ class MyHandler(FileSystemEventHandler):
 
 
 if __name__ == "__main__":
-    os.mkdir('data')
+    Path('data').mkdir(exist_ok=True)
     event_handler = MyHandler()
     observer = Observer()
     observer.schedule(event_handler, 'data')
